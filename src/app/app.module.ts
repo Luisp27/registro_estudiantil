@@ -9,7 +9,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DialogComponent } from './dialog/dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -21,8 +20,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { HeaderComponent } from './header/header.component';
-import { TableComponent } from './table/table.component';
+
+import { DialogComponent } from './components/dialog/dialog.component';
+import { HeaderComponent } from './components/header/header.component';
+import { TableComponent } from './components/table/table.component';
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { TableComponent } from './table/table.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    TextMaskModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,58 @@
+<mat-form-field>
+  <mat-label>Filtrar</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input />
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="fullName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Nombre del estudiante
+      </th>
+      <td mat-cell *matCellDef="let row">{{ row.fullName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="subjects">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Calificaciones</th>
+      <td mat-cell *matCellDef="let row">{{ row.subjects }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="attendance">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Asistencia <br />L-M-M-J-V
+      </th>
+      <td mat-cell *matCellDef="let row">{{ row.attendance }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="grades">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nota</th>
+      <td mat-cell *matCellDef="let row">{{ row.grades }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Action">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button (click)="editEstudiante(row)" color="primary">
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button (click)="deleteStudent(row.id)" mat-icon-button color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">
+        No se ha encontrado el estudiante: "{{ input.value }}"
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+  ></mat-paginator>
+</div>

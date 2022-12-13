@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogComponent } from '../dialog/dialog.component';
-import { ApiService } from '../services/api.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-table',
@@ -13,7 +13,7 @@ import { ApiService } from '../services/api.service';
 })
 export class TableComponent {
   title = 'registroEstudiantil';
-  displayedColumns: string[] = ['studentName', 'Materias', 'Asistencia', 'Calificaciones', 'Action'];
+  displayedColumns: string[] = ['fullName', 'subjects', 'attendance', 'grades', 'Action'];
 
   @Input()
   dataSource!: MatTableDataSource<any>;
@@ -29,14 +29,27 @@ export class TableComponent {
     this.dataSource.sort = this.sort;
   }
 
+  ngAfterViewInit() {
+    this.paginator._intl.itemsPerPageLabel = "Cantidad de estudiantes por pagina";
+  }
+
   editEstudiante(row: any) {
-    this.dialog.open(DialogComponent, {
-      width: '30%',
-      data: row
+    this.api.getStudent(row.id).subscribe({
+      next: (res) => {
+        this.dialog.open(DialogComponent, {
+          width: '30%',
+          data: res
+        })
+      },
+      error: () => {
+        alert("Error al recuperar datos");
+        return;
+      }
     })
   }
-  deleteEstudiante(id: number) {
-    this.api.deleteEstudiante(id)
+
+  deleteStudent(id: number) {
+    this.api.deleteStudent(id)
       .subscribe({
         next: (res) => {
           alert("Seguro desea eliminar");

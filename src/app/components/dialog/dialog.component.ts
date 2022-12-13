@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ApiService } from '../services/api.service';
+import { ApiService } from '../../services/api.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -10,7 +10,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DialogComponent implements OnInit {
 
-  Asistencias = ["P", "A"];
+  attendances = ["P", "A"];
+  attendanceInputMask = [/[P|A]/, '-', /[P|A]/, '-', /[P|A]/, '-', /[P|A]/, '-', /[P|A]/];
   studentForm !: FormGroup;
   actionBtn: string = "Save";
 
@@ -21,25 +22,25 @@ export class DialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.studentForm = this.formBuilder.group({
-      studentName: ['', Validators.required],
-      Materias: ['', Validators.required],
-      Calificaciones: ['', Validators.required],
-      Asistencia: ['', Validators.required],
-
+      fullName: ['', Validators.required],
+      subjects: ['', Validators.required],
+      grades: ['', Validators.required],
+      attendance: ['', Validators.required],
     });
 
     if (this.editData) {
       this.actionBtn = "Actualizar";
-      this.studentForm.controls['studentName'].setValue(this.editData.studentName);
-      this.studentForm.controls['Materias'].setValue(this.editData.Materias);
-      this.studentForm.controls['Asistencia'].setValue(this.editData.Asistencia);
-      this.studentForm.controls['Calificaciones'].setValue(this.editData.Calificaciones);
+      this.studentForm.controls['fullName'].setValue(this.editData.fullName);
+      this.studentForm.controls['subjects'].setValue(this.editData.subjects);
+      this.studentForm.controls['attendance'].setValue(this.editData.attendance);
+      this.studentForm.controls['grades'].setValue(this.editData.grades);
     }
   }
   addEstudents() {
     if (!this.editData) {
+      console.log(this.studentForm.value)
       if (this.studentForm.valid) {
-        this.api.postEstudiante(this.studentForm.value)
+        this.api.postStudent(this.studentForm.value)
           .subscribe({
             next: (res) => {
               alert("Agregar estudiante");
@@ -58,7 +59,7 @@ export class DialogComponent implements OnInit {
   }
 
   updateEstudiante() {
-    this.api.putEstudiante(this.studentForm.value, this.editData.id)
+    this.api.putStudent(this.studentForm.value, this.editData.id)
       .subscribe({
         next: (res) => {
           alert("Estudiante actualizado");

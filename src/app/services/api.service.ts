@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-interface Estudiante {
+interface IStudent {
   id: number;
-  studentName: string;
-  Materias: string;
-  Calificaciones: string;
+  fullName: string;
+  subjects: string;
+  grades: string;
 }
 
 @Injectable({
@@ -15,16 +15,19 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  postEstudiante(data: Estudiante) {
-    return this.http.post<Estudiante>("http://localhost:3000/stusentList", data);
+  postStudent(data: IStudent) {
+    return this.http.post<IStudent>("http://localhost:4000/studentsList", data);
   }
-  getEstudiantes() {
-    return this.http.get<Estudiante[]>("http://localhost:3000/stusentList/");
+  getStudent(id: number) {
+    return this.http.get<IStudent>("http://localhost:4000/studentsList/" + id);
   }
-  putEstudiante(data: Estudiante, id: number) {
-    return this.http.put<Estudiante>("http://localhost:3000/stusentList/" + id, data);
+  getStudents() {
+    return this.http.get<IStudent[]>("http://localhost:4000/studentsList/");
   }
-  deleteEstudiante(id: number) {
-    return this.http.delete<Estudiante>("http://localhost:3000/stusentList/" + id);
+  putStudent(data: IStudent, id: number) {
+    return this.http.put<IStudent>("http://localhost:4000/studentsList/" + id, data);
+  }
+  deleteStudent(id: number) {
+    return this.http.delete<IStudent>("http://localhost:4000/studentsList/" + id);
   }
 }

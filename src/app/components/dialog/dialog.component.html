@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>Agregar estudiante</h1>
+<div mat-dialog-content>
+  <form [formGroup]="studentForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre y Apellido del estudiante</mat-label>
+      <input matInput formControlName="fullName" placeholder="" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Asignatura</mat-label>
+      <mat-select formControlName="subjects" placeholder="subjects">
+        <mat-option value="Lengua Española">Lengua Española</mat-option>
+        <mat-option value="Matematica">Matematica</mat-option>
+        <mat-option value="Ciencias Sociales">Ciencias Sociales</mat-option>
+        <mat-option value="Ciencias Naturales">Ciencias Naturales</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Asistencia</mat-label>
+      <input matInput formControlName="attendance" [textMask]="{mask: attendanceInputMask}" placeholder="" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nota</mat-label>
+      <input matInput formControlName="grades" placeholder="" />
+    </mat-form-field>
+  </form>
+
+  <div mat-dialog-action [align]="'end'">
+    <button mat-raised-button color="warn" mat-dialog-close>Cancelar</button>
+    <button
+      style="margin-left: 8px"
+      mat-raised-button
+      color="primary"
+      (click)="addEstudents()"
+    >
+      {{ actionBtn }}
+    </button>
+  </div>
+</div>
